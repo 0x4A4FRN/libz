@@ -1,5 +1,5 @@
 .{
-    .name = "libz",
+    .name = .libz,
     .version = "1.3.0",
     .paths = .{
         "LICENSE",
@@ -33,4 +33,5 @@
         "zutil.c",
         "zutil.h",
     },
+    .fingerprint = 0xf0a9f60fb138e558,
 }

@@ -1,10 +1,13 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
-    const lib = b.addStaticLibrary(.{
+    const lib = b.addLibrary(.{
         .name = "z",
-        .target = b.standardTargetOptions(.{}),
-        .optimize = b.standardOptimizeOption(.{}),
+        .linkage = .static,
+        .root_module = b.createModule(.{
+            .target = b.standardTargetOptions(.{}),
+            .optimize = b.standardOptimizeOption(.{}),
+        }),
     });
     lib.linkLibC();
     lib.addCSourceFiles(.{
@@ -27,7 +30,13 @@ pub fn build(b: *std.Build) void {
         },
         .flags = &.{"-std=c89"},
     });
-    lib.installHeader(b.path("zconf.h"), "zconf.h");
-    lib.installHeader(b.path("zlib.h"), "zlib.h");
+    lib.installHeader(
+        b.path("zconf.h"),
+        "zconf.h",
+    );
+    lib.installHeader(
+        b.path("zlib.h"),
+        "zlib.h",
+    );
     b.installArtifact(lib);
 }
